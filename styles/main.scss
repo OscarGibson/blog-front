@@ -1,2 +1,13 @@
-@import 'base/normalize.scss'
-@import 'base/reset.scss'
+// variables
+@import 'variables/custom_colors.sass';
+
+// base
+@import 'base/normalize.scss';
+@import 'base/reset.scss';
+
+// custom elements
+@import 'custom/styles.scss';
+@import 'custom/blog.scss';
+
+// classes
+@import 'classes/classes.scss';

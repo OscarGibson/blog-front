@@ -1,0 +1,19 @@
+extends ../abstract_pages/page.pug
+include ../../mixins/blog-post-element.pug
+
+block page_content
+
+	include ../../variables/blog-post.pug
+
+	div.row
+		div(class="col-lg-8 col-md-10 mx-auto")
+			each post in posts_data
+				+post_preview_element(
+					post.title,
+					post.subtitle,
+					post.link,
+					post.date,
+					post.author,
+					post.author_link,
+					post.content
+				)

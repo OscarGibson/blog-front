@@ -1,0 +1,21 @@
+.blog {
+	&-post {
+		a {
+			text-decoration: none;
+			color: $black;
+			&:hover,&:active,&:visited {
+				color: $black;
+			}
+		}
+		&-title {
+
+		}
+		&-subtitle {
+
+		}
+		&-meta {
+			margin-bottom: 2.4rem;
+			color: $light-grey;
+		}
+	}
+}

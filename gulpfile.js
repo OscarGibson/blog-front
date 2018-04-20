@@ -6,6 +6,7 @@ var cleanCSS           = require('gulp-clean-css');
 var gconcat            = require('gulp-concat');
 var gulp               = require('gulp');
 var gutil              = require('gulp-util');
+var gulpif             = require('gulp-if');
 var imagemin           = require('gulp-imagemin');
 var notify             = require('gulp-notify');
 var plumber            = require('gulp-plumber');
@@ -14,6 +15,7 @@ var rename             = require("gulp-rename");
 var sass               = require('gulp-sass');
 var sourcemaps         = require('gulp-sourcemaps');
 var uglify             = require('gulp-uglify');
+var sprity             = require('sprity');
 // sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-pug gulp-imagemin gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
 var jsVendorFiles      = [];             // Holds the js vendor files to be concatenated
 var myJsFiles          = ['js/*.js'];    // Holds the js files to be concatenated
@@ -162,6 +164,29 @@ gulp.task('default', function() {
 
 gulp.task('setup', function() {
   gulp.start('styles', 'templates', 'scripts', 'images', 'setup-src');
+});
+
+// generate sprite.png and _sprite.scss
+gulp.task('sprites', function () {
+  return sprity.src({
+    src: 'img/**/*.{png,jpg}',
+    style: 'img/sprites/sprite.css',
+    // ... other optional options 
+    // for example if you want to generate scss instead of css 
+    processor: 'sass', // make sure you have installed sprity-sass 
+  })
+  .pipe(gulpif('*.png', gulp.dest('build/img/'), gulp.dest('build/css/')))
+});
+
+// generate scss with base64 encoded images
+gulp.task('base64', function () {
+  return gulp.src('img/*.png')
+    .pipe(sprite.src({
+      base64: true,
+      style: '_base64.scss',
+      processor: 'scss'
+    }))
+    .pipe(gulp.dest('build/scss/'));
 });
 
 gulp.task('watch', function() {
